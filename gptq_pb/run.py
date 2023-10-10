@@ -23,6 +23,10 @@ def get_model(model):
         from transformers import LlamaForCausalLM
         model = LlamaForCausalLM.from_pretrained(model, torch_dtype='auto')
         model.seqlen = 2048
+    else:
+        from transformers import AutoModelForCausualLM
+        model = AutoModelForCausualLM.from_pretrained(model, torch_dtype='auto')
+        model.seqlen = 4 * 1024
     return model
 
 @torch.no_grad()
