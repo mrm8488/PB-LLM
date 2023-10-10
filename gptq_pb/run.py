@@ -19,14 +19,10 @@ def get_model(model):
         from transformers import OPTForCausalLM
         model = OPTForCausalLM.from_pretrained(model, torch_dtype='auto')
         model.seqlen = model.config.max_position_embeddings
-    elif 'huggyllama' in model:
+    elif 'llama' in model.lower():
         from transformers import LlamaForCausalLM
         model = LlamaForCausalLM.from_pretrained(model, torch_dtype='auto')
-        model.seqlen = 2048
-    else:
-        from transformers import AutoModelForCausualLM
-        model = AutoModelForCausualLM.from_pretrained(model, torch_dtype='auto')
-        model.seqlen = 4 * 1024
+        model.seqlen = 2048 if 'huggyllama' in model else 4096
     return model
 
 @torch.no_grad()
