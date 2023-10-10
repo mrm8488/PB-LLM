@@ -44,7 +44,7 @@ def quant_sequential(model, dataloader, dev):
             model.model.decoder.project_out = model.model.decoder.project_out.to(dev) 
         if hasattr(model.model.decoder, 'project_in') and model.model.decoder.project_in:
             model.model.decoder.project_in = model.model.decoder.project_in.to(dev) 
-    elif 'huggyllama' in args.model:
+    elif 'huggyllama' in args.model or 'Llama-2-7b' in args.model:
         layers = model.model.layers
         model.model.embed_tokens = model.model.embed_tokens.to(dev)
         model.model.norm = model.model.norm.to(dev)
