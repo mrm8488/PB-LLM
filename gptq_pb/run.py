@@ -8,21 +8,21 @@ from high_quant import HighQuantizer
 from low_quant import LowQuantizer
 from modelutils import find_layers
 
-def get_model(model):
+def get_model(model_id):
     import torch
     def skip(*args, **kwargs):
         pass
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    if 'opt' in model:
+    if 'opt' in model_id:
         from transformers import OPTForCausalLM
-        model = OPTForCausalLM.from_pretrained(model, torch_dtype='auto')
+        model = OPTForCausalLM.from_pretrained(model_id, torch_dtype='auto')
         model.seqlen = model.config.max_position_embeddings
-    elif 'llama' in model.lower():
+    elif 'llama' in model_id.lower():
         from transformers import LlamaForCausalLM
-        model = LlamaForCausalLM.from_pretrained(model, torch_dtype='auto')
-        model.seqlen = 2048 if 'huggyllama' in model else 4096
+        model = LlamaForCausalLM.from_pretrained(model_id, torch_dtype='auto')
+        model.seqlen = 2048 if 'huggyllama' in model_id else 4096
     return model
 
 @torch.no_grad()
