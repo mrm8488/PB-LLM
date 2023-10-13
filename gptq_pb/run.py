@@ -256,7 +256,7 @@ if __name__ == '__main__':
         if 'opt' in args.model:
             from eval_ppl_utils import opt_eval
             opt_eval(model, testloader, device, dataset, args.log_wandb)
-        elif 'huggyllama' in args.model:
+        elif 'llama' in args.model.lower():
             from eval_ppl_utils import llama_eval
             llama_eval(model, testloader, device, dataset, args.log_wandb)
 
